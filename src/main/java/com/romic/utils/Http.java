@@ -213,9 +213,7 @@ public class Http {
 
 	/**
 	 * 获得最终的地址（包括301或者302等跳转后的地址）
-	 *
-	 * @param from
-	 *            原始地址
+	 * @param from 原始地址
 	 * @return 最终的地址
 	 */
 	@SuppressWarnings({ "resource" })
