@@ -2,6 +2,9 @@ package com.romic.utils;
 
 import java.nio.charset.Charset;
 
+/**
+ * 获取手机号码相关信息
+ */
 public class Phone {
 
 	private Http http = null;
@@ -15,7 +18,7 @@ public class Phone {
 	}
 	
 	/**
-	 * 获取ip地址信息
+	 * 获取手机号码相关信息
 	 * @return
 	 */
 	public String getInfo() {
