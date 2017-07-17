@@ -2,3 +2,6 @@
 .buildpath
 .project
 target/
+.idea/
+.classpath
+*.iml

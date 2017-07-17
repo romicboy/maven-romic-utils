@@ -246,26 +246,19 @@ public class Http {
 	 * @param httpResponses
 	 * @return
 	 */
-	private String responsetoString(HttpResponse httpResponses){
+	private String responsetoString(HttpResponse httpResponses) throws IOException {
 		String html = null;
-		if (httpResponses.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-			HttpEntity entity = httpResponses.getEntity();
-			try {
-				InputStream inputStream = entity.getContent();
-				Header contentEncoding = entity.getContentEncoding();
-				if (null != contentEncoding && contentEncoding.getValue().equals("gzip")) {
-					inputStream = new GZIPInputStream(inputStream);
-				}
-				html = IOUtils.toString(inputStream,charset);
-				IOUtils.closeQuietly(inputStream);
-			} catch (UnsupportedOperationException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
+		if (httpResponses.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 			Loger.info("Http Status Code", String.valueOf(httpResponses.getStatusLine().getStatusCode()));
 		}
+		HttpEntity entity = httpResponses.getEntity();
+		InputStream inputStream = entity.getContent();
+		Header contentEncoding = entity.getContentEncoding();
+		if (null != contentEncoding && contentEncoding.getValue().equals("gzip")) {
+			inputStream = new GZIPInputStream(inputStream);
+		}
+		html = IOUtils.toString(inputStream,charset);
+		IOUtils.closeQuietly(inputStream);
 		return html;
 	}
 	
