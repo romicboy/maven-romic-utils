@@ -11,20 +11,10 @@ import java.util.Map;
  */
 public class DBUtil {
 
-//    public static final String url = "jdbc:mysql://192.168.11.220/agh";
-//    public static final String name = "com.mysql.jdbc.Driver";
-//    public static final String user = "agh";
-//    public static final String password = "sApOglPZkDHL";
-//    public static final String url = "jdbc:mysql://rdszmjbzqzmjbzq.mysql.rds.aliyuncs.com:3306/agh";
-//    public static final String url = "jdbc:mysql://rdszmjbzqzmjbzq.mysql.rds.aliyuncs.com:3306/short_url";
-//    public static final String name = "com.mysql.jdbc.Driver";
-//    public static final String user = "landray";
-//    public static final String password = "landray123";
-
-    public static final String url = "jdbc:mysql://s3-i.care001.cn:3306/agh_dt3";
     public static final String name = "com.mysql.jdbc.Driver";
-    public static final String user = "agh_admin";
-    public static final String password = "rNzadqKASVJjKwVQ";
+    public static final String url = "jdbc:mysql://127.0.0.1/test";
+    public static final String user = "root";
+    public static final String password = "root";
 
     private Connection connection = null;
 
@@ -42,15 +32,6 @@ public class DBUtil {
         this.connection = connection;
     }
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM agh6_user_corp limit 2";
-
-        DBUtil instance = DBUtil.getInstance(DBUtil.url, DBUtil.user, DBUtil.password);
-        List<Map<String, String>> list = instance.select(sql);
-        System.out.printf(list.toString());
-        Map<String, String> stringStringMap = instance.find(sql);
-        System.out.printf(stringStringMap.toString());
-    }
 
     public Map<String, String> find(String sql) throws SQLException, ClassNotFoundException {
         List<Map<String, String>> list = select(sql);
@@ -77,7 +58,14 @@ public class DBUtil {
         return list;
     }
 
-    public static void close() throws SQLException {
-        instance.close();
+    public int executeUpdate(String sql) throws SQLException {
+        PreparedStatement pst = connection.prepareStatement(sql);
+        int result = pst.executeUpdate();
+        pst.close();
+        return result;
+    }
+
+    public void close() throws SQLException {
+        connection.close();
     }
 }
